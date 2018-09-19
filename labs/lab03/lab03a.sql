@@ -57,3 +57,24 @@ VALUES (135798642, 'Framing hammer, 20oz.', 'Stanley', 'Frame01', 18.95, 20),
 (123123123, 'Cold Chisel 1"', 'Challenger', 'One inch', 12.04, 30),
 (321321321, 'Jackhammer, Electric', 'Bosche', 'Sml Elec', 128.95, 5),
 (111222333, 'Arc Welder', 'Lincoln', 'Industrial', 5298.65, 1);
+
+INSERT INTO "Order"(customer_ID, orderDate, soldBy)
+VALUES
+(1, '2015-12-24', 'Patrick'),
+(1, '2015-11-25', 'Sally Forth'),
+(2, '2016-05-05', 'Mack'),
+(3, '2012-05-05', 'Phillip'),
+(3, '2014-04-04', 'Patrick');
+
+INSERT INTO OrderLine
+(customer_id, orderDate, UniversalProductCode, quantity, unitSalePrice)
+VALUES
+(1, '2015-12-24', 135798642, 3, NULL),
+(1, '2015-12-24', 123456789, 1, NULL),
+(1, '2015-11-25', 777999111, 3, NULL),
+(2, '2016-05-05', 321321321, 2, 120.00),
+(3, '2012-05-05', 123123123, 1, NULL),
+(3, '2012-05-05', 777999111, 3, NULL),
+(3, '2012-05-05', 123456789, 2, NULL),
+(3, '2014-04-04', 135798642, 1, NULL),
+(3, '2014-04-04', 123123123, 2, NULL);
