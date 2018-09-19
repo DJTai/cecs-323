@@ -78,3 +78,24 @@ VALUES
 (3, '2012-05-05', 123456789, 2, NULL),
 (3, '2014-04-04', 135798642, 1, NULL),
 (3, '2014-04-04', 123123123, 2, NULL);
+
+
+/*
+Perform a join between customer to order to orderline to product and list out
+all of the columns (9)
+*/
+SELECT *
+FROM customer
+NATURAL JOIN "Order"
+NATURAL JOIN orderLine
+INNER JOIN product ON orderLine.UNIVERSALPRODUCTCODE = product.UPC;
+
+/*
+List the product name and price of all of the products that have never been 
+ordered (1)
+*/
+SELECT prodName, unitListPrice
+FROM product
+LEFT OUTER JOIN orderLine
+ON product.UPC = orderLine.UNIVERSALPRODUCTCODE
+WHERE orderDate is NULL;
