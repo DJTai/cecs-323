@@ -57,14 +57,21 @@ AND orders.ORDERDATE > '2013-09-30';
 - Classic Cars, Motorcycles, and Planes.
 - Hint: you have two ways to do this. Try both of them. Which is easier if you have a large number of selection criteria?
 */
-
+SELECT * FROM productLines pl
+WHERE pl.PRODUCTLINE LIKE 'Classic%'
+OR pl.PRODUCTLINE LIKE 'Motor%'
+OR pl.PRODUCTLINE LIKE 'Planes';
 
 /*
 5. Find the contact Last Name, contact First Name, and the state for all customers.
 - Display them in alphabetical order by city within state. (100)
 */
-
+SELECT city, contactLastName, contactFirstName,state
+FROM customers c
+ORDER BY c."STATE", c.CITY ASC;
 
 /*
 6. Find the productName for all products which sell for $30.00 to $60.00 (15)
 */
+SELECT MSRP, productName FROM products p
+WHERE p.MSRP >= 30 AND p.MSRP <= 60;
