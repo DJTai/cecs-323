@@ -83,6 +83,11 @@ VALUES
 /*
 Perform a join between customer to order to orderline to product and list out
 all of the columns (9)
+
+Customer: customer_id, cFirstName, cLastName, cPhone, cStreet, cZipCode
+OrderLine: CUSTOMER_ID, orderDate, universalProductcode, Qty, unitSalePrice
+"Order": CUSTOMER_ID, ORDERDATE, soldBy
+Product: UPC, prodName, mfgr, model, unitListPrice, unitsInStock
 */
 SELECT *
 FROM customer
@@ -99,3 +104,35 @@ FROM product
 LEFT OUTER JOIN orderLine
 ON product.UPC = orderLine.UNIVERSALPRODUCTCODE
 WHERE orderDate is NULL;
+
+/*
+NOT using the natural join, list the first name, last name, and phone num of all of
+the customers who have placed at least one order. List alphabetically by last name, 
+then first name. List each customer ONLY ONCE (3)
+
+Customer_ID is in 3 tables
+*/
+
+
+/*
+NOT sing the natural join, list the customer last name, first name, phone number, and 
+the date of the order of those who have placed an order PRIOR to 2016. List ea customer 
+order only once. List the orders in order by last name, then first name, and finally by 
+date (4)
+*/
+
+
+/*
+You remember that someone came in and ordered a level, but you don’t recall what sort of 
+level it was, and you want to give them a call.  Write a query that will print the first 
+name, last name, phone number and the name of the product of anyone who has ordered a 
+product with the word “level” in it.  Do not assume that you know what the capitalization 
+of the product name is.  List each customer and product only once.(2)
+*/
+
+
+/*
+List the product name, manufacturer, and model of all products that have been ordered 
+at least once in an order in which the month number was the same as the day number. For 
+instance, July 7th 2010 is such a date. List a given product only once.(5)
+*/
