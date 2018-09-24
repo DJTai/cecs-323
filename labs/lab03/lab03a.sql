@@ -81,7 +81,7 @@ VALUES
 
 
 /*
-Perform a join between customer to order to orderline to product and list out
+1. Perform a join between customer to order to orderline to product and list out
 all of the columns (9)
 
 Customer: customer_id, cFirstName, cLastName, cPhone, cStreet, cZipCode
@@ -96,7 +96,7 @@ NATURAL JOIN orderLine
 INNER JOIN product ON orderLine.UNIVERSALPRODUCTCODE = product.UPC;
 
 /*
-List the product name and price of all of the products that have never been 
+2. List the product name and price of all of the products that have never been 
 ordered (1)
 */
 SELECT prodName, unitListPrice
@@ -106,7 +106,7 @@ ON product.UPC = orderLine.UNIVERSALPRODUCTCODE
 WHERE orderDate is NULL;
 
 /*
-NOT using the natural join, list the first name, last name, and phone num of all of
+3. NOT using the natural join, list the first name, last name, and phone num of all of
 the customers who have placed at least one order. List alphabetically by last name, 
 then first name. List each customer ONLY ONCE (3)
 */
@@ -116,7 +116,7 @@ INNER JOIN "Orders" USING (Customer_ID)
 ORDER BY cLastName, cFirstName;
 
 /*
-NOT sing the natural join, list the customer last name, first name, phone number, and 
+4. NOT sing the natural join, list the customer last name, first name, phone number, and 
 the date of the order of those who have placed an order PRIOR to 2016. List ea customer 
 order only once. List the orders in order by last name, then first name, and finally by 
 date (4)
@@ -124,7 +124,7 @@ date (4)
 
 
 /*
-You remember that someone came in and ordered a level, but you don’t recall what sort of 
+5. You remember that someone came in and ordered a level, but you don’t recall what sort of 
 level it was, and you want to give them a call.  Write a query that will print the first 
 name, last name, phone number and the name of the product of anyone who has ordered a 
 product with the word “level” in it.  Do not assume that you know what the capitalization 
@@ -133,7 +133,7 @@ of the product name is.  List each customer and product only once.(2)
 
 
 /*
-List the product name, manufacturer, and model of all products that have been ordered 
+6. List the product name, manufacturer, and model of all products that have been ordered 
 at least once in an order in which the month number was the same as the day number. For 
 instance, July 7th 2010 is such a date. List a given product only once.(5)
 */
