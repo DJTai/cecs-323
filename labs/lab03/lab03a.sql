@@ -109,10 +109,11 @@ WHERE orderDate is NULL;
 NOT using the natural join, list the first name, last name, and phone num of all of
 the customers who have placed at least one order. List alphabetically by last name, 
 then first name. List each customer ONLY ONCE (3)
-
-Customer_ID is in 3 tables
 */
-
+SELECT DISTINCT cFirstName, cLastName, cPhone
+FROM customer
+INNER JOIN "Orders" USING (Customer_ID)
+ORDER BY cLastName, cFirstName;
 
 /*
 NOT sing the natural join, list the customer last name, first name, phone number, and 
