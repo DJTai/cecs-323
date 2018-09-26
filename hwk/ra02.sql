@@ -23,21 +23,42 @@ AND (DAY(o.SHIPPEDDATE) - DAY(o.ORDERDATE)) < 3;
 4. List the names of all Customers, their service reps and the Offices that 
 the service reps work in
 */
-
+SELECT c.CUSTOMERNAME, e.LASTNAME || ', ' || e.FIRSTNAME AS repName,
+o.OFFICECODE, o.CITY, o.ADDRESSLINE1, o.ADDRESSLINE2
+FROM customers c
+INNER JOIN employees e
+ON (c.SALESREPEMPLOYEENUMBER = e.EMPLOYEENUMBER)
+INNER JOIN offices o USING(officeCode);
 
 /*
 5. List the Employee first and last name, and their Customer’s name even if 
 the Employee is not working with a Customer
 */
+SELECT e.firstName, e.lastName, 
+c.CUSTOMERNAME, c.SALESREPEMPLOYEENUMBER AS SREN
+FROM employees e
+NATURAL JOIN customers c
+ORDER BY e.LASTNAME, e.FIRSTNAME ASC;
 
 /*
 6. List all of the possible statuses for an order.
 */
+SELECT DISTINCT o.STATUS FROM orders o;
 
 /*
 7. List all Orders where the quantity of a product ordered is greater than the 
 quantity of that product on hand
 */
+SELECT * FROM orders; -- orderNumber
+SELECT * FROM orderDetails; -- orderNumber, quantityOrdered, productCode
+SELECT * FROM products; -- quantityInStock, productCode
+
+SELECT * FROM orders o
+NATURAL JOIN orderDetails od
+NATURAL JOIN products p
+WHERE od.QUANTITYORDERED > p.QUANTITYINSTOCK;
+
+
 
 /*
 8. List the Employee LastName and FirstName that work in Japan
