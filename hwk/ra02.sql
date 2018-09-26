@@ -53,13 +53,23 @@ SELECT * FROM orders; -- orderNumber
 SELECT * FROM orderDetails; -- orderNumber, quantityOrdered, productCode
 SELECT * FROM products; -- quantityInStock, productCode
 
-SELECT * FROM orders o
+SELECT o.ORDERNUMBER, od.QUANTITYORDERED, p.QUANTITYINSTOCK
+FROM orders o
 NATURAL JOIN orderDetails od
 NATURAL JOIN products p
 WHERE od.QUANTITYORDERED > p.QUANTITYINSTOCK;
 
-
-
 /*
 8. List the Employee LastName and FirstName that work in Japan
 */
+SELECT * FROM employees; -- lastName, firstName, officeCode
+
+SELECT * FROM offices; -- officeCode = 5, country = Japan
+
+SELECT * FROM employees e
+NATURAL JOIN offices o
+WHERE o.COUNTRY LIKE '%Japan%';
+-- OR --
+SELECT * FROM employees e
+NATURAL JOIN offices o
+WHERE o.COUNTRY = 'Japan';
