@@ -91,30 +91,48 @@ Do not show any combination more than once. (9) */
 /* Aggregate Functions */
 -------------------------
 -- 26. Find the total of all payments made by each customer (98)
-SELECT SUM(p.AMOUNT) AS "Total of all Payments" FROM payments p;
+SELECT payments.CUSTOMERNUMBER, SUM(payments.AMOUNT)
+FROM payments
+GROUP BY payments.CUSTOMERNUMBER;
 
 -- 27. Find the largest payment made by a customer (1)
-SELECT MAX(p.AMOUNT) AS "Largest Payment" FROM payments p;
+SELECT MAX(payments.AMOUNT)
+FROM payments;
 
-/* 28. Find the average payment made by a customer (1) */
-SELECT AVG(p.AMOUNT) AS "Average Payment" FROM payments p;
+-- 28. Find the average payment made by a customer (1)
+SELECT AVG(payments.AMOUNT)
+FROM payments;
 
-/* 29. What is the total number of products per product line (7) */
-SELECT p.PRODUCTLINE, COUNT(p.PRODUCTNAME)
-FROM products p
-GROUP BY p.PRODUCTLINE;
+-- 29. What is the total number of products per product line (7)
+-- SELECT COUNT(products.PRODUCTNAME) FROM products
+-- GROUP BY products.PRODUCTLINE
+SELECT products.productline, COUNT(*) FROM products
+GROUP BY products.PRODUCTLINE;
 
-/* 30. What is the number of orders per status (6) */
+-- 30. What is the number of orders per status (6)
+SELECT orders.STATUS, COUNT(orders.STATUS)
+FROM orders
+GROUP BY orders.STATUS;
 
-/* 31. List all offices and the number of employees working in each office (7) */
+-- 31. List all offices and the number of employees working in each office (7)
+SELECT employees.OFFICECODE, COUNT(*) FROM employees
+GROUP BY employees.OFFICECODE;
 
-/* Having */
-------------
-/* 32. List the total number of products per product line where number of 
-products > 3 (6) */
+-- Having
+-- 32. List the total number of products per product line where number of 
+-- products > 3 (6)
+SELECT products.PRODUCTLINE, COUNT(*) FROM products
+GROUP BY products.PRODUCTLINE
+HAVING COUNT(*) > 3;
 
-/* 33. List the product lines and vendors for product lines which are supported 
-by < 5 vendors (3) */
+-- 33. List the product lines and vendors for product lines which are supported
+-- by < 5 vendors (3)
+SELECT prod.PRODUCTLINE, prod.PRODUCTVENDOR
+FROM products prod;
+
+SELECT prod.PRODUCTLINE, COUNT(DISTINCT prod.PRODUCTVENDOR) AS "Vendors Assoc."
+FROM products prod
+GROUP BY prod.PRODUCTLINE;
 
 ------------------
 /* Computations */
