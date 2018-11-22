@@ -90,13 +90,19 @@ Do not show any combination more than once. (9) */
 -------------------------
 /* Aggregate Functions */
 -------------------------
-/* 26. Find the total of all payments made by each customer (98) */
+-- 26. Find the total of all payments made by each customer (98)
+SELECT SUM(p.AMOUNT) AS "Total of all Payments" FROM payments p;
 
-/* 27. Find the largest payment made by a customer (1) */
+-- 27. Find the largest payment made by a customer (1)
+SELECT MAX(p.AMOUNT) AS "Largest Payment" FROM payments p;
 
 /* 28. Find the average payment made by a customer (1) */
+SELECT AVG(p.AMOUNT) AS "Average Payment" FROM payments p;
 
 /* 29. What is the total number of products per product line (7) */
+SELECT p.PRODUCTLINE, COUNT(p.PRODUCTNAME)
+FROM products p
+GROUP BY p.PRODUCTLINE;
 
 /* 30. What is the number of orders per status (6) */
 
