@@ -115,51 +115,87 @@ FROM orders
 GROUP BY orders.STATUS;
 
 -- 31. List all offices and the number of employees working in each office (7)
-SELECT employees.OFFICECODE, COUNT(*) FROM employees
+SELECT employees.OFFICECODE, COUNT(*) AS "Employees at Office"
+FROM employees
 GROUP BY employees.OFFICECODE;
 
--- Having
+------------
+/* Having */
+------------
 -- 32. List the total number of products per product line where number of 
 -- products > 3 (6)
-SELECT products.PRODUCTLINE, COUNT(*) FROM products
+SELECT products.PRODUCTLINE, COUNT(*) AS "Number of Products"
+FROM products
 GROUP BY products.PRODUCTLINE
 HAVING COUNT(*) > 3;
 
 -- 33. List the product lines and vendors for product lines which are supported
 -- by < 5 vendors (3)
-SELECT prod.PRODUCTLINE, prod.PRODUCTVENDOR
-FROM products prod;
-
-SELECT prod.PRODUCTLINE, COUNT(DISTINCT prod.PRODUCTVENDOR) AS "Vendors Assoc."
+SELECT prod.PRODUCTLINE, COUNT(prod.PRODUCTVENDOR) AS "Number of Vendors"
 FROM products prod
-GROUP BY prod.PRODUCTLINE;
+GROUP BY prod.PRODUCTLINE
+HAVING COUNT(prod.PRODUCTVENDOR) < 5
+ORDER BY "Number of Vendors";
 
 ------------------
 /* Computations */
 ------------------
-/* 34. What product that makes us the most money (qty*price) (1) */
+-- 34. What product that makes us the most money (qty*price) (1)
+-- NOT DONE
+SELECT prod.PRODUCTNAME, (prod.QUANTITYINSTOCK * prod.BUYPRICE) AS "Money Made"
+FROM products prod
+ORDER BY "Money Made" DESC;
+-- NOT DONE
 
-/* 35. What is the profit per product (MSRP-buyprice) (110) */
+-- 35. What is the profit per product (MSRP-buyprice) (110)
+SELECT prod.PRODUCTNAME, (prod.MSRP - prod.BUYPRICE) AS "Profit"
+FROM products prod
+ORDER BY "Profit";
 
 --------------------
 /* Set Operations */
 --------------------
-/* 36. List all customers who didn't order in 2015 (78) */
+-- 36. List all customers who didn't order in 2015 (78)
+SELECT cust.CUSTOMERNAME
+FROM customers cust
+INNER JOIN orders ord ON(cust.CUSTOMERNUMBER = ord.CUSTOMERNUMBER)
+EXCEPT
+SELECT cust.CUSTOMERNAME
+FROM customers cust
+INNER JOIN orders ord ON(cust.CUSTOMERNUMBER = ord.CUSTOMERNUMBER)
+WHERE YEAR(ord.ORDERDATE) = 2015;
 
-/* 37. List all people that we deal with (employees and customer contacts). 
-Display first name, last name, company name (or employee) (145) */
+-- 37. List all people that we deal with (employees and customer contacts). 
+-- Display first name, last name, company name (or employee) (145)
+SELECT cust.CONTACTFIRSTNAME AS "First Name",
+cust.CONTACTLASTNAME AS "Last Name"
+FROM customers cust
+UNION
+SELECT emp.FIRSTNAME AS "First Name", emp.LASTNAME AS "Last Name"
+FROM employees emp
+ORDER BY "Last Name";
 
-/* 38. List the last name, first name, and employee number of all of the 
-employees who do not have any customers. Order by last name first, then the 
-first name. (8). */
+-- 38. List the last name, first name, and employee number of all of the 
+-- employees who do not have any customers. Order by last name first, then the 
+-- first name. (8).
+SELECT emp.LASTNAME AS "Last Name",
+emp.FIRSTNAME AS "First Name",
+emp.EMPLOYEENUMBER AS "Employee #"
+FROM employees emp
+EXCEPT
+SELECT emp.LASTNAME AS "Last Name",
+emp.FIRSTNAME AS "First Name",
+cust.SALESREPEMPLOYEENUMBER AS "Employee #"
+FROM customers cust
+INNER JOIN employees emp ON(cust.SALESREPEMPLOYEENUMBER = emp.EMPLOYEENUMBER);
 
 /* 39. List the states and the country that the state is part of that have 
 customers but not offices, offices but not customers, or both one or more 
 customers and one or more offices all in one query. Designate which state is 
 which with the string 'Customer', 'Office', or 'Both'. If a state falls into 
-the “Both” category, do not list it as a Customer or an Office state.  Order 
+the 'Both' category, do not list it as a Customer or an Office state.  Order 
 by the country, then the state. Give the category column (where you list 
-‘Customer’, ‘Office’, or ‘Both’) a header of “Category” and exclude any 
+'Customer', 'Office', or 'Both') a header of 'Category' and exclude any 
 entries in which the state is null. (19) */
 
 /* 40. List the Product Code and Product name of every product that has never 
@@ -168,7 +204,7 @@ Order by the Product Name.  (8) */
 
 /* 41. List the first name and last name of any customer who ordered any products 
 from either of the two product lines ‘Trains’ or ‘Trucks and Buses’. Do not use 
-an “or”.  Instead perform a union.  Order by the customer’s name. (61) */
+an “or�?.  Instead perform a union.  Order by the customer’s name. (61) */
 
 /* 42. List the name of all customers who do not live in the same state and 
 country with any other customer.  Do not use a count for this exercise.
@@ -195,7 +231,7 @@ Order by the customer name. */
 -- 48. Perform the above query using a view. (1)
 
 -- 49. Show all of the customers who have ordered at least one product with the 
--- name “Ford” in it, that “Dragon Souveniers, Ltd.” has also ordered.  List 
+-- name “Ford�? in it, that “Dragon Souveniers, Ltd.�? has also ordered.  List 
 -- them in reverse alphabetical order, and do not consider the case of the 
 -- letters in the customer name in the ordering. Show each customer no more 
 -- than once. (61)
